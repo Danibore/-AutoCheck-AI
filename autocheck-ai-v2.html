@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AutoCheck AI — Report auto usata</title>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#172033;background:#f3f6fb}
+*{box-sizing:border-box}body{margin:0}header{background:#101b33;color:white;padding:28px 18px}
+.wrap{max-width:980px;margin:auto}h1{margin:0 0 7px;font-size:clamp(26px,5vw,38px)}header p{margin:0;color:#cbd5e8}
+main{max-width:980px;margin:24px auto;padding:0 16px 48px;display:grid;grid-template-columns:1fr;gap:18px}
+.card{background:white;border:1px solid #e3e9f2;border-radius:16px;padding:22px;box-shadow:0 6px 22px #1720330a}
+h2{margin:0 0 16px;font-size:20px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+label{display:block;font-size:13px;font-weight:650;color:#34415a;margin-bottom:6px}
+input,select,textarea{width:100%;border:1px solid #cbd5e1;border-radius:9px;padding:11px 12px;font:inherit;background:#fff;color:#172033}
+textarea{min-height:76px;resize:vertical}.full{grid-column:1/-1}
+button{border:0;border-radius:10px;padding:13px 18px;background:#2463eb;color:white;font-weight:750;font-size:15px;cursor:pointer}
+button:hover{background:#174fc9}.secondary{background:#e9efff;color:#214db2}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.muted{font-size:12px;color:#68758b;line-height:1.5}.hidden{display:none}
+.report-head{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}
+.badge{display:inline-block;border-radius:999px;padding:7px 11px;background:#edf3ff;color:#214db2;font-weight:750;font-size:13px}
+.score{font-size:34px;font-weight:850;letter-spacing:-1px}.metric{background:#f6f8fc;border-radius:12px;padding:14px}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}
+ul{padding-left:20px;line-height:1.6}li{margin:5px 0}.notice{background:#fff8e8;border:1px solid #f4d99a;padding:12px;border-radius:10px;font-size:13px;line-height:1.5}
+footer{text-align:center;color:#77839a;font-size:12px;padding:0 16px 30px}
+@media(max-width:620px){.grid{grid-template-columns:1fr}.metrics{grid-template-columns:1fr}.full{grid-column:auto}}
+@media print{body{background:white}header{padding:14px 18px}.no-print,#formCard,footer{display:none!important}main{display:block;margin:0;max-width:none}.card{box-shadow:none;border:0;padding:8px}.report{display:block!important}.notice{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><h1>AutoCheck AI</h1><p>Una prima valutazione ragionata dell’auto usata, prima di andare a vederla.</p>
+<p style="margin-top:12px"><a href="#plans" style="color:#cbd5e8">Vedi i piani</a> · <a href="#formCard" style="color:#cbd5e8">Prova l'analisi</a></p></div></header>
+<main>
+
+<section class="card" id="plans">
+<h2>Come funziona il servizio</h2>
+<p class="muted">Prezzi di lancio proposti. In questa demo non vengono effettuati pagamenti.</p>
+<div class="grid">
+  <div class="metric"><span class="badge">GRATIS</span><h2 style="margin:10px 0 6px">Anteprima</h2><strong>0 €</strong><ul><li>Indice preliminare</li><li>Prime criticità</li><li>Consigli essenziali</li></ul></div>
+  <div class="metric"><span class="badge">PIÙ SCELTO</span><h2 style="margin:10px 0 6px">Report completo</h2><strong>2,99 €</strong><ul><li>Analisi dettagliata dei dati</li><li>Checklist pre-acquisto</li><li>Report stampabile in PDF</li></ul></div>
+  <div class="metric"><span class="badge">APPROFONDITO</span><h2 style="margin:10px 0 6px">Premium</h2><strong>5,99 €</strong><ul><li>Tutto il report completo</li><li>Confronto prezzo con annunci simili inseriti dall'utente</li><li>Stima delle spese da preventivare</li></ul></div>
+  <div class="metric"><span class="badge">CONFRONTA</span><h2 style="margin:10px 0 6px">3 auto</h2><strong>9,99 €</strong><ul><li>Confronto di tre veicoli</li><li>Pro e contro di ciascuno</li><li>Riepilogo per scegliere</li></ul></div>
+</div>
+<div class="notice" style="margin-top:14px"><strong>Nota:</strong> questi sono prezzi e contenuti proposti per testare l'offerta. Prima di venderli davvero serviranno un backend, un sistema di pagamento e controlli affidabili sui dati. Non inserire dati personali o documenti in questa demo.</div>
+</section>
+
+<section class="card" id="formCard">
+<h2>1. Inserisci i dati dell’auto</h2>
+<form id="carForm">
+<div class="grid">
+<div><label for="make">Marca</label><input id="make" required placeholder="Es. Audi"></div>
+<div><label for="model">Modello e versione</label><input id="model" required placeholder="Es. A5 Sportback 40 TDI"></div>
+<div><label for="year">Anno di immatricolazione</label><input id="year" type="number" min="1990" max="2026" required placeholder="2021"></div>
+<div><label for="km">Chilometri</label><input id="km" type="number" min="0" required placeholder="65000"></div>
+<div><label for="price">Prezzo richiesto (€)</label><input id="price" type="number" min="0" step="100" required placeholder="28500"></div>
+<div><label for="fuel">Alimentazione</label><select id="fuel"><option>Diesel</option><option>Benzina</option><option>Ibrida</option><option>Elettrica</option><option>GPL</option><option>Metano</option></select></div>
+<div><label for="seller">Venditore</label><select id="seller"><option>Concessionario</option><option>Privato</option><option>Commerciante</option></select></div>
+<div><label for="owners">Numero proprietari</label><select id="owners"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4 o più</option><option value="0">Non noto</option></select></div>
+<div><label for="service">Storico manutenzione</label><select id="service"><option value="yes">Documentato e completo</option><option value="partial">Parziale</option><option value="no">Assente / non dimostrato</option><option value="unknown">Non so</option></select></div>
+<div><label for="accident">Incidenti o danni dichiarati</label><select id="accident"><option value="no">Nessuno dichiarato</option><option value="yes">Sì</option><option value="unknown">Non noto</option></select></div>
+<div><label for="warranty">Garanzia</label><select id="warranty"><option value="yes">Sì, condizioni scritte</option><option value="limited">Limitata / da verificare</option><option value="no">No</option></select></div>
+<div><label for="compare">Prezzo medio di 2–3 annunci simili (€)</label><input id="compare" type="number" min="0" step="100" placeholder="Facoltativo"></div>
+<div class="full"><label for="notes">Note o difetti già segnalati</label><textarea id="notes" placeholder="Es. gomme da cambiare, tagliando recente, spie accese..."></textarea></div>
+</div>
+<div class="actions"><button type="submit">Genera il report</button><button type="reset" class="secondary">Azzera</button></div>
+</form>
+<p class="muted">I dati restano in questa pagina: non vengono inviati a un server. Questa versione è un prototipo dimostrativo e non interroga banche dati o annunci in tempo reale.</p>
+</section>
+<section class="card report hidden" id="report">
+<div class="report-head"><div><span class="badge">REPORT PRELIMINARE</span><h2 id="carTitle" style="margin:10px 0 0"></h2></div><div><div class="score" id="score">—/100</div><div class="muted">Indice indicativo, non perizia</div></div></div>
+<div class="metrics">
+<div class="metric"><div class="muted">Prezzo richiesto</div><strong id="priceOut">—</strong></div>
+<div class="metric"><div class="muted">Chilometraggio</div><strong id="kmOut">—</strong></div>
+<div class="metric"><div class="muted">Età del veicolo</div><strong id="ageOut">—</strong></div>
+</div>
+<h2>Esito preliminare</h2><p id="verdict"></p>
+<p class="muted" id="priceInsight"></p>
+<h2>Controlli e possibili criticità</h2><ul id="checks"></ul>
+<h2>Prima di acquistare</h2><ul id="steps"></ul>
+<div class="notice"><strong>Importante:</strong> questo report non certifica chilometri, incidenti, provenienza, stato meccanico o valore di mercato. Il punteggio è una checklist automatica basata solo sui dati inseriti. Prima di pagare, fai verificare l’auto da un meccanico indipendente e controlla documenti e VIN.</div>
+<div class="actions no-print"><button onclick="window.print()">Stampa / salva in PDF</button><button class="secondary" onclick="document.getElementById('formCard').scrollIntoView({behavior:'smooth'})">Modifica dati</button></div>
+</section>
+</main>
+<footer>AutoCheck AI · Prototipo MVP v2 · Valutazione orientativa, non consulenza tecnica o finanziaria.</footer>
+<script>
+const $=id=>document.getElementById(id);
+const euro=n=>new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
+$('carForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ const make=$('make').value.trim(), model=$('model').value.trim();
+ const year=+$('year').value, km=+$('km').value, price=+$('price').value;
+ const age=Math.max(0,2026-year), service=$('service').value, accident=$('accident').value;
+ const owners=$('owners').value, warranty=$('warranty').value, seller=$('seller').value;
+ let score=75, checks=[], steps=[];
+ if(age>10){score-=12;checks.push('Veicolo con oltre 10 anni: controlla usura, manutenzione e disponibilità dei ricambi.')}
+ else if(age>6){score-=6;checks.push('Età superiore a 6 anni: verifica con attenzione gli interventi di manutenzione previsti.')}
+ if(km>200000){score-=18;checks.push('Chilometraggio elevato: richiedi fatture e verifica gli interventi costosi già eseguiti.')}
+ else if(km>120000){score-=10;checks.push('Chilometraggio sopra 120.000 km: controlla frizione/cambio, distribuzione e componenti soggetti a usura secondo il motore.')}
+ else if(km<age*5000 && age>3){checks.push('Chilometraggio insolitamente basso rispetto all’età: verifica le revisioni e la documentazione.')}
+ if(service==='no'){score-=20;checks.push('Storico manutenzione assente: rischio importante, chiedi fatture e storico tagliandi.')}
+ else if(service==='partial'||service==='unknown'){score-=9;checks.push('Storico manutenzione incompleto o non noto: non considerarlo dimostrato.')}
+ else checks.push('Storico manutenzione dichiarato completo: verifica comunque fatture e date.');
+ if(accident==='yes'){score-=18;checks.push('Sono stati dichiarati incidenti o danni: richiedi documentazione e una verifica della struttura e della verniciatura.')}
+ else if(accident==='unknown'){score-=8;checks.push('Incidenti non verificati: chiedi una dichiarazione scritta e controlla la carrozzeria.')}
+ if(owners==='3'||owners==='4'){score-=7;checks.push('Più passaggi di proprietà: ricostruisci la storia e i motivi delle vendite.')}
+ if(owners==='0'){score-=3;checks.push('Numero di proprietari non noto: verifica i documenti.')}
+ if(warranty==='no'){score-=5;checks.push('Nessuna garanzia dichiarata: chiarisci per iscritto tutele e condizioni applicabili.')}
+ if(warranty==='limited'){score-=2;checks.push('Garanzia limitata: leggi esclusioni, durata e coperture prima di firmare.')}
+ if(seller==='Privato')checks.push('Vendita da privato: fai controllare documenti, identità del venditore e situazione amministrativa del veicolo.');
+ const comp=+$('compare').value;
+ let priceText='Non valutabile senza confronti di mercato attendibili.';
+ if(comp>0){let diff=(price-comp)/comp*100;priceText=diff>8?'Il prezzo inserito è circa '+Math.round(diff)+'% sopra il confronto indicato: negozia o verifica differenze di allestimento e condizioni.':diff< -8?'Il prezzo è circa '+Math.round(Math.abs(diff))+'% sotto il confronto indicato: prezzo interessante, ma approfondisci perché è più basso.':'Il prezzo è vicino al confronto inserito (scostamento circa '+Math.round(Math.abs(diff))+'%): confronta allestimento, garanzia e condizioni.'; if(diff>8)score-=8; }
+ const notes=$('notes').value.trim(); if(notes){checks.push('Note del venditore / difetti segnalati: '+notes);}
+ if(!checks.length)checks.push('Nessuna criticità evidente nei campi compilati; le informazioni devono comunque essere verificate.');
+ score=Math.max(0,Math.min(100,score));
+ $('carTitle').textContent=make+' '+model+' · '+year;
+ $('score').textContent=score+'/100';
+ $('priceOut').textContent=euro(price); $('kmOut').textContent=km.toLocaleString('it-IT')+' km'; $('ageOut').textContent=age+' anni';
+ $('priceInsight').textContent=priceText;\n $('verdict').textContent=score>=80?'Profilo preliminare abbastanza rassicurante sulla base dei dati inseriti. Procedi solo dopo i controlli indipendenti.':score>=60?'Profilo da approfondire: ci sono elementi da verificare prima di impegnarti.': 'Profilo con diverse cautele: evita caparre o firme finché i punti critici non sono chiariti.';
+ if(comp>0)checks.push(priceText); else checks.push('Per un confronto prezzo, inserisci la media di almeno 2–3 annunci davvero comparabili per anno, motore, allestimento, chilometri e garanzia.');
+ steps=['Controlla VIN/telaio e corrispondenza con i documenti.','Verifica revisioni, chilometri registrati, gravami e documentazione di proprietà.','Fai un test drive a motore freddo e caldo; prova cambio, freni, sterzo, elettronica e climatizzatore.','Fai eseguire una diagnosi elettronica e un’ispezione indipendente sul ponte.','Chiedi preventivi per manutenzione imminente e difetti; metti per iscritto ogni promessa del venditore.'];
+ $('checks').innerHTML=checks.map(x=>'<li>'+escapeHtml(x)+'</li>').join('');
+ $('steps').innerHTML=steps.map(x=>'<li>'+escapeHtml(x)+'</li>').join('');
+ $('report').classList.remove('hidden'); $('report').scrollIntoView({behavior:'smooth'});
+});
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+$('carForm').addEventListener('reset',()=>{$('report').classList.add('hidden');});
+</script>
+</body></html>
